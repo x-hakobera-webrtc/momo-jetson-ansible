@@ -1,0 +1,8 @@
+---
+- hosts: jetson
+  become: yes
+  roles:
+    - momo
+    - role: prometheus
+      vars:
+        prometheus_version: 2.22.0

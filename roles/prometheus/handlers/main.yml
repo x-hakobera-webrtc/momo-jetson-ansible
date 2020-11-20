@@ -1,0 +1,11 @@
+- name: restart prometheus
+  systemd:
+    state: restarted
+    daemon_reload: yes
+    name: prometheus
+
+- name: restart rsyslog
+  systemd:
+    state: restarted
+    daemon_reload: yes
+    name: rsyslog
