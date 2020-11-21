@@ -6,3 +6,7 @@
     - role: prometheus
       vars:
         prometheus_version: 2.22.0
+    - role: node_exporter
+      vars:
+        node_exporter_version: 1.0.1
+    - role: momo_exporter

@@ -4,3 +4,4 @@
     name:
       - libnspr4 
       - libnss3
+      - v4l-utils

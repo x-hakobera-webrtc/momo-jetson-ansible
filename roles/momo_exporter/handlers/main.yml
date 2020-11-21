@@ -1,0 +1,5 @@
+- name: restart momo_exporter
+  systemd:
+    state: restarted
+    daemon_reload: yes
+    name: momo_exporter
