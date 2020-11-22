@@ -3,6 +3,7 @@
   user:
     name: prometheus
     system: yes
+    create_home: no
 
 - name: check prometheus
   stat:
@@ -32,20 +33,6 @@
     mode: 0644
   notify:
     - restart prometheus
-
-- name: copy rsyslog.d file
-  copy:
-    src: prometheus.conf.rsyslog.d
-    dest: /etc/rsyslog.d/prometheus.conf
-    mode: 0644
-  notify:
-    - restart rsyslog
-
-- name: copy logrotate.d file
-  copy:
-    src: prometheus.logrotate.d
-    dest: /etc/logrotate.d/prometheus
-    mode: 0644
 
 - name: copy prometheus.yml
   template:
