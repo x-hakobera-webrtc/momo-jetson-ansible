@@ -1,0 +1,27 @@
+global:
+  scrape_interval:     15s
+  evaluation_interval: 15s
+  external_labels:
+    monitor: 'jetson'
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets:
+        - 'localhost:9090'
+
+  - job_name: node
+    static_configs:
+      - targets:
+        - 'localhost:9100'
+        labels:
+          node_name: jetson
+
+  - job_name: 'momo'
+    static_configs:
+      - targets:
+        - 'localhost:9801'
+
+remote_write:
+- url: https://metric-api.newrelic.com/prometheus/v1/write?prometheus_server={{ newrelic_instrumentation_source }}
+  bearer_token: {{ newrelic_token }}

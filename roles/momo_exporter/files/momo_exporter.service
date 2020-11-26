@@ -1,0 +1,11 @@
+[Unit]
+Description=Node Exporter
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/momo_exporter \
+  --momo.scrape-uri="http://127.0.0.1:8081/metrics"
+PrivateTmp=false
+
+[Install]
+WantedBy=multi-user.target

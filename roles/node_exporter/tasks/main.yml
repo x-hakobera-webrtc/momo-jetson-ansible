@@ -1,0 +1,31 @@
+---
+- name: download node_exporter
+  unarchive:
+    src: https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.linux-arm64.tar.gz 
+    dest: /opt
+    remote_src: yes
+  register: download
+
+- name: create link
+  file:
+    src: /opt/node_exporter-{{ node_exporter_version }}.linux-arm64/node_exporter
+    dest: /usr/local/bin/node_exporter
+    state: link
+  when: download.changed
+
+- name: copy systemd file
+  copy:
+    src: node_exporter.service
+    dest: /etc/systemd/system/node_exporter.service
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - restart node_exporter
+
+- name: enabled and start node_exporter service
+  systemd:
+    name: node_exporter
+    enabled: yes
+    state: started
+    daemon_reload: yes
