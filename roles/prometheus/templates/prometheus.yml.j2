@@ -7,21 +7,22 @@ global:
 scrape_configs:
   - job_name: 'prometheus'
     static_configs:
-      - targets:
-        - 'localhost:9090'
+      - targets: ['localhost:9090']
+        labels:
+          instance: {{ node_name }}
 
   - job_name: node
     static_configs:
-      - targets:
-        - 'localhost:9100'
+      - targets: ['localhost:9100']
         labels:
-          node_name: jetson
+          instance: {{ node_name }}
 
   - job_name: 'momo'
     static_configs:
-      - targets:
-        - 'localhost:9801'
+      - targets: ['localhost:9801']
+        labels:
+          instance: {{ node_name }}
 
 remote_write:
-- url: https://metric-api.newrelic.com/prometheus/v1/write?prometheus_server={{ newrelic_instrumentation_source }}
+- url: https://metric-api.newrelic.com/prometheus/v1/write?prometheus_server={{ node_name }}
   bearer_token: {{ newrelic_token }}
