@@ -5,3 +5,10 @@
       - libnspr4 
       - libnss3
       - v4l-utils
+
+- name: download momo
+  unarchive:
+    src: https://github.com/shiguredo/momo/releases/download/{{ momo_version }}/momo-{{ momo_version }}_ubuntu-18.04_armv8_jetson_{{ jetson_type }}.tar.gz
+    dest: /opt
+    remote_src: yes
+  register: download
