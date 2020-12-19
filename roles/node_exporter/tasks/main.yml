@@ -4,6 +4,8 @@
     src: https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.linux-arm64.tar.gz 
     dest: /opt
     remote_src: yes
+    owner: root
+    group: root
   register: download
 
 - name: create link
@@ -12,6 +14,8 @@
     dest: /usr/local/bin/node_exporter
     state: link
   when: download.changed
+  notify:
+    - restart node_exporter
 
 - name: copy systemd file
   copy:

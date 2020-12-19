@@ -1,30 +1,21 @@
 ---
-- name: create directory
-  file:
-    path: /opt/momo_exporter
-    state: directory
-    mode: 0755
-
-- name: copy momo_exporter binary
-  copy:
-    src: momo_exporter
-    dest: /opt/momo_exporter
-    mode: 0755
-  notify:
-    - restart momo_exporter
-
-- name: enabled and start momo_exporter service
-  systemd:
-    name: momo_exporter
-    enabled: yes
-    state: started
-    daemon_reload: yes
+- name: download momo_exporter
+  unarchive:
+    src: https://github.com/hakobera/momo_exporter/releases/download/v{{ momo_exporter_version }}/momo_exporter-{{ momo_exporter_version }}.linux-arm64.tar.gz
+    dest: /opt
+    remote_src: yes
+    owner: root
+    group: root
+  register: download
 
 - name: create link
   file:
-    src: /opt/momo_exporter/momo_exporter
+    src: /opt/momo_exporter-{{ momo_exporter_version }}.linux-arm64/momo_exporter
     dest: /usr/local/bin/momo_exporter
     state: link
+  when: download.changed
+  notify:
+    - restart momo_exporter
 
 - name: copy systemd file
   copy:
