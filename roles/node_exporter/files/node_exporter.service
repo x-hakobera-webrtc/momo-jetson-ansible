@@ -28,9 +28,9 @@ ExecStart=/usr/local/bin/node_exporter \
   --collector.meminfo \
   --no-collector.meminfo_numa \
   --no-collector.mountstats \
-  --no-collector.netclass \
-  --no-collector.netdev \
-  --no-collector.netstat \
+  --collector.netclass \
+  --collector.netdev \
+  --collector.netstat \
   --no-collector.nfs \
   --no-collector.nfsd \
   --no-collector.ntp \
@@ -47,7 +47,7 @@ ExecStart=/usr/local/bin/node_exporter \
   --no-collector.stat \
   --no-collector.supervisord \
   --no-collector.systemd \
-  --no-collector.tcpstat \
+  --collector.tcpstat \
   --no-collector.textfile \
   --collector.thermal_zone \
   --no-collector.time \
