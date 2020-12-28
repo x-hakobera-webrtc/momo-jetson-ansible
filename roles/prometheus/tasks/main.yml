@@ -26,6 +26,13 @@
     owner: prometheus
     group: prometheus
 
+- name: create config directory
+  file:
+    path: /etc/prometheus
+    state: directory
+    owner: prometheus
+    group: prometheus
+
 - name: copy systemd file
   template:
     src: prometheus.service.j2
